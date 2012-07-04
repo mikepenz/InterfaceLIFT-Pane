@@ -1,0 +1,375 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C9097244159E091B002D42B8 /* GalleryView.h in Headers */ = {isa = PBXBuildFile; fileRef = C9097242159E091B002D42B8 /* GalleryView.h */; };
+		C9097245159E091B002D42B8 /* GalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9097243159E091B002D42B8 /* GalleryView.m */; };
+		C9097249159E0B38002D42B8 /* ImageCell.h in Headers */ = {isa = PBXBuildFile; fileRef = C9097247159E0B38002D42B8 /* ImageCell.h */; };
+		C909724A159E0B38002D42B8 /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9097248159E0B38002D42B8 /* ImageCell.m */; };
+		C91A1E3414DCAD0300A52E4D /* OverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = C91A1E3214DCAD0300A52E4D /* OverlayView.h */; };
+		C91A1E3514DCAD0300A52E4D /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C91A1E3314DCAD0300A52E4D /* OverlayView.m */; };
+		C926431214B8B81F00EF9D57 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C926431114B8B81F00EF9D57 /* Cocoa.framework */; };
+		C926431414B8B81F00EF9D57 /* PreferencePanes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C926431314B8B81F00EF9D57 /* PreferencePanes.framework */; };
+		C926432214B8B81F00EF9D57 /* InterfaceLIFT.m in Sources */ = {isa = PBXBuildFile; fileRef = C926432114B8B81F00EF9D57 /* InterfaceLIFT.m */; };
+		C926432E14B8B88A00EF9D57 /* InterfaceLIFT.prefPane in Copy Preference Pane */ = {isa = PBXBuildFile; fileRef = C926430E14B8B81F00EF9D57 /* InterfaceLIFT.prefPane */; };
+		C926433614B8BEAD00EF9D57 /* Wallpaper.h in Headers */ = {isa = PBXBuildFile; fileRef = C926433414B8BEAD00EF9D57 /* Wallpaper.h */; };
+		C926433714B8BEAD00EF9D57 /* Wallpaper.m in Sources */ = {isa = PBXBuildFile; fileRef = C926433514B8BEAD00EF9D57 /* Wallpaper.m */; };
+		C926433E14B9111700EF9D57 /* WallpaperRequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C926433C14B9111700EF9D57 /* WallpaperRequestOperation.h */; };
+		C926433F14B9111700EF9D57 /* WallpaperRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C926433D14B9111700EF9D57 /* WallpaperRequestOperation.m */; };
+		C926434114B9115900EF9D57 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C926434014B9115900EF9D57 /* WebKit.framework */; };
+		C957263014DE1B590014E553 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C957262F14DE1B590014E553 /* Quartz.framework */; };
+		C9B1C77315A3CEFD00E9F0D0 /* Badge.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C76D15A3CEFD00E9F0D0 /* Badge.png */; };
+		C9B1C77415A3CEFD00E9F0D0 /* Badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C76E15A3CEFD00E9F0D0 /* Badge@2x.png */; };
+		C9B1C77515A3CEFD00E9F0D0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C76F15A3CEFD00E9F0D0 /* Icon.png */; };
+		C9B1C77615A3CEFD00E9F0D0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C77015A3CEFD00E9F0D0 /* Icon@2x.png */; };
+		C9B1C77815A3CEFD00E9F0D0 /* InterfaceLIFT.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C77215A3CEFD00E9F0D0 /* InterfaceLIFT.xib */; };
+		C9DFD03814DC964C008655B7 /* SetWallpaperOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DFD03614DC964C008655B7 /* SetWallpaperOperation.h */; };
+		C9DFD03914DC964C008655B7 /* SetWallpaperOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD03714DC964C008655B7 /* SetWallpaperOperation.m */; };
+		C9DFD03C14DC9C95008655B7 /* ConcurrentOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */; };
+		C9DFD03D14DC9C95008655B7 /* ConcurrentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C926432D14B8B85E00EF9D57 /* Copy Preference Pane */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "~/Library/PreferencePanes";
+			dstSubfolderSpec = 0;
+			files = (
+				C926432E14B8B88A00EF9D57 /* InterfaceLIFT.prefPane in Copy Preference Pane */,
+			);
+			name = "Copy Preference Pane";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		C9097242159E091B002D42B8 /* GalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryView.h; sourceTree = "<group>"; };
+		C9097243159E091B002D42B8 /* GalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryView.m; sourceTree = "<group>"; };
+		C9097247159E0B38002D42B8 /* ImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCell.h; sourceTree = "<group>"; };
+		C9097248159E0B38002D42B8 /* ImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCell.m; sourceTree = "<group>"; };
+		C91A1E3214DCAD0300A52E4D /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
+		C91A1E3314DCAD0300A52E4D /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
+		C926430E14B8B81F00EF9D57 /* InterfaceLIFT.prefPane */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InterfaceLIFT.prefPane; sourceTree = BUILT_PRODUCTS_DIR; };
+		C926431114B8B81F00EF9D57 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C926431314B8B81F00EF9D57 /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = System/Library/Frameworks/PreferencePanes.framework; sourceTree = SDKROOT; };
+		C926431614B8B81F00EF9D57 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		C926431714B8B81F00EF9D57 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		C926431814B8B81F00EF9D57 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C926431F14B8B81F00EF9D57 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		C926432014B8B81F00EF9D57 /* InterfaceLIFT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterfaceLIFT.h; sourceTree = "<group>"; };
+		C926432114B8B81F00EF9D57 /* InterfaceLIFT.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterfaceLIFT.m; sourceTree = "<group>"; };
+		C926433414B8BEAD00EF9D57 /* Wallpaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wallpaper.h; sourceTree = "<group>"; };
+		C926433514B8BEAD00EF9D57 /* Wallpaper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wallpaper.m; sourceTree = "<group>"; };
+		C926433C14B9111700EF9D57 /* WallpaperRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WallpaperRequestOperation.h; sourceTree = "<group>"; };
+		C926433D14B9111700EF9D57 /* WallpaperRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WallpaperRequestOperation.m; sourceTree = "<group>"; };
+		C926434014B9115900EF9D57 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		C957262F14DE1B590014E553 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		C9B1C76D15A3CEFD00E9F0D0 /* Badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Badge.png; sourceTree = "<group>"; };
+		C9B1C76E15A3CEFD00E9F0D0 /* Badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Badge@2x.png"; sourceTree = "<group>"; };
+		C9B1C76F15A3CEFD00E9F0D0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		C9B1C77015A3CEFD00E9F0D0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		C9B1C77115A3CEFD00E9F0D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9B1C77215A3CEFD00E9F0D0 /* InterfaceLIFT.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InterfaceLIFT.xib; sourceTree = "<group>"; };
+		C9DFD03614DC964C008655B7 /* SetWallpaperOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetWallpaperOperation.h; sourceTree = "<group>"; };
+		C9DFD03714DC964C008655B7 /* SetWallpaperOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetWallpaperOperation.m; sourceTree = "<group>"; };
+		C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConcurrentOperation.h; sourceTree = "<group>"; };
+		C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConcurrentOperation.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C926430914B8B81F00EF9D57 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C926431214B8B81F00EF9D57 /* Cocoa.framework in Frameworks */,
+				C926431414B8B81F00EF9D57 /* PreferencePanes.framework in Frameworks */,
+				C957263014DE1B590014E553 /* Quartz.framework in Frameworks */,
+				C926434114B9115900EF9D57 /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C926430114B8B81E00EF9D57 = {
+			isa = PBXGroup;
+			children = (
+				C926431914B8B81F00EF9D57 /* Classes */,
+				C926431A14B8B81F00EF9D57 /* Supporting Files */,
+				C9B1C76C15A3CEFD00E9F0D0 /* Resources */,
+				C926431014B8B81F00EF9D57 /* Frameworks */,
+				C926430F14B8B81F00EF9D57 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C926430F14B8B81F00EF9D57 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C926430E14B8B81F00EF9D57 /* InterfaceLIFT.prefPane */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C926431014B8B81F00EF9D57 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C926431114B8B81F00EF9D57 /* Cocoa.framework */,
+				C926431314B8B81F00EF9D57 /* PreferencePanes.framework */,
+				C957262F14DE1B590014E553 /* Quartz.framework */,
+				C926434014B9115900EF9D57 /* WebKit.framework */,
+				C926431514B8B81F00EF9D57 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C926431514B8B81F00EF9D57 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C926431614B8B81F00EF9D57 /* AppKit.framework */,
+				C926431714B8B81F00EF9D57 /* CoreData.framework */,
+				C926431814B8B81F00EF9D57 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		C926431914B8B81F00EF9D57 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */,
+				C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */,
+				C9097242159E091B002D42B8 /* GalleryView.h */,
+				C9097243159E091B002D42B8 /* GalleryView.m */,
+				C9097247159E0B38002D42B8 /* ImageCell.h */,
+				C9097248159E0B38002D42B8 /* ImageCell.m */,
+				C926432014B8B81F00EF9D57 /* InterfaceLIFT.h */,
+				C926432114B8B81F00EF9D57 /* InterfaceLIFT.m */,
+				C91A1E3214DCAD0300A52E4D /* OverlayView.h */,
+				C91A1E3314DCAD0300A52E4D /* OverlayView.m */,
+				C9DFD03614DC964C008655B7 /* SetWallpaperOperation.h */,
+				C9DFD03714DC964C008655B7 /* SetWallpaperOperation.m */,
+				C926433414B8BEAD00EF9D57 /* Wallpaper.h */,
+				C926433514B8BEAD00EF9D57 /* Wallpaper.m */,
+				C926433C14B9111700EF9D57 /* WallpaperRequestOperation.h */,
+				C926433D14B9111700EF9D57 /* WallpaperRequestOperation.m */,
+			);
+			name = Classes;
+			path = InterfaceLIFT;
+			sourceTree = "<group>";
+		};
+		C926431A14B8B81F00EF9D57 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C926431F14B8B81F00EF9D57 /* Prefix.pch */,
+			);
+			name = "Supporting Files";
+			path = InterfaceLIFT;
+			sourceTree = "<group>";
+		};
+		C9B1C76C15A3CEFD00E9F0D0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C9B1C76D15A3CEFD00E9F0D0 /* Badge.png */,
+				C9B1C76E15A3CEFD00E9F0D0 /* Badge@2x.png */,
+				C9B1C76F15A3CEFD00E9F0D0 /* Icon.png */,
+				C9B1C77015A3CEFD00E9F0D0 /* Icon@2x.png */,
+				C9B1C77115A3CEFD00E9F0D0 /* Info.plist */,
+				C9B1C77215A3CEFD00E9F0D0 /* InterfaceLIFT.xib */,
+			);
+			name = Resources;
+			path = InterfaceLIFT/Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C926430A14B8B81F00EF9D57 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9DFD03C14DC9C95008655B7 /* ConcurrentOperation.h in Headers */,
+				C91A1E3414DCAD0300A52E4D /* OverlayView.h in Headers */,
+				C9DFD03814DC964C008655B7 /* SetWallpaperOperation.h in Headers */,
+				C926433614B8BEAD00EF9D57 /* Wallpaper.h in Headers */,
+				C926433E14B9111700EF9D57 /* WallpaperRequestOperation.h in Headers */,
+				C9097244159E091B002D42B8 /* GalleryView.h in Headers */,
+				C9097249159E0B38002D42B8 /* ImageCell.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C926430D14B8B81F00EF9D57 /* InterfaceLIFT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C926432A14B8B81F00EF9D57 /* Build configuration list for PBXNativeTarget "InterfaceLIFT" */;
+			buildPhases = (
+				C926430814B8B81F00EF9D57 /* Sources */,
+				C926430914B8B81F00EF9D57 /* Frameworks */,
+				C926430A14B8B81F00EF9D57 /* Headers */,
+				C926430B14B8B81F00EF9D57 /* Resources */,
+				C926432D14B8B85E00EF9D57 /* Copy Preference Pane */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InterfaceLIFT;
+			productName = InterfaceLIFT;
+			productReference = C926430E14B8B81F00EF9D57 /* InterfaceLIFT.prefPane */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C926430314B8B81E00EF9D57 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Matt Rajca";
+			};
+			buildConfigurationList = C926430614B8B81E00EF9D57 /* Build configuration list for PBXProject "InterfaceLIFT" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C926430114B8B81E00EF9D57;
+			productRefGroup = C926430F14B8B81F00EF9D57 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C926430D14B8B81F00EF9D57 /* InterfaceLIFT */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C926430B14B8B81F00EF9D57 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9B1C77315A3CEFD00E9F0D0 /* Badge.png in Resources */,
+				C9B1C77415A3CEFD00E9F0D0 /* Badge@2x.png in Resources */,
+				C9B1C77515A3CEFD00E9F0D0 /* Icon.png in Resources */,
+				C9B1C77615A3CEFD00E9F0D0 /* Icon@2x.png in Resources */,
+				C9B1C77815A3CEFD00E9F0D0 /* InterfaceLIFT.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C926430814B8B81F00EF9D57 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9DFD03D14DC9C95008655B7 /* ConcurrentOperation.m in Sources */,
+				C9097245159E091B002D42B8 /* GalleryView.m in Sources */,
+				C909724A159E0B38002D42B8 /* ImageCell.m in Sources */,
+				C926432214B8B81F00EF9D57 /* InterfaceLIFT.m in Sources */,
+				C91A1E3514DCAD0300A52E4D /* OverlayView.m in Sources */,
+				C9DFD03914DC964C008655B7 /* SetWallpaperOperation.m in Sources */,
+				C926433714B8BEAD00EF9D57 /* Wallpaper.m in Sources */,
+				C926433F14B9111700EF9D57 /* WallpaperRequestOperation.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C926432814B8B81F00EF9D57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx10.7;
+			};
+			name = Debug;
+		};
+		C926432914B8B81F00EF9D57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = supported;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx10.7;
+			};
+			name = Release;
+		};
+		C926432B14B8B81F00EF9D57 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = InterfaceLIFT/Prefix.pch;
+				INFOPLIST_FILE = InterfaceLIFT/Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Debug;
+		};
+		C926432C14B8B81F00EF9D57 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = InterfaceLIFT/Prefix.pch;
+				INFOPLIST_FILE = InterfaceLIFT/Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/PreferencePanes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = prefPane;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C926430614B8B81E00EF9D57 /* Build configuration list for PBXProject "InterfaceLIFT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C926432814B8B81F00EF9D57 /* Debug */,
+				C926432914B8B81F00EF9D57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C926432A14B8B81F00EF9D57 /* Build configuration list for PBXNativeTarget "InterfaceLIFT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C926432B14B8B81F00EF9D57 /* Debug */,
+				C926432C14B8B81F00EF9D57 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C926430314B8B81E00EF9D57 /* Project object */;
+}

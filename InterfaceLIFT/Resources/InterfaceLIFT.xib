@@ -79,7 +79,7 @@
 									<object class="NSColor" key="NSBGColor">
 										<int key="NSColorSpace">6</int>
 										<string key="NSCatalogName">System</string>
-										<string key="NSColorName">controlColor</string>
+										<string key="NSColorName">controlBackgroundColor</string>
 										<object class="NSColor" key="NSColor">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>

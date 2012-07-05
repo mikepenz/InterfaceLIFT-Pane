@@ -8,6 +8,7 @@
 #import "InterfaceLIFT.h"
 
 @implementation InterfaceLIFT {
+	NSString *_latestID;
 	NSOperationQueue *_workQueue;
 	NSOperationQueue *_wallpaperQueue;
 	NSOperationQueue *_thumbQueue;
@@ -39,6 +40,7 @@
 }
 
 - (void)dealloc {
+	[_latestID release];
 	[_workQueue release];
 	[_wallpaperQueue release];
 	[_thumbQueue release];
@@ -83,10 +85,9 @@
 }
 
 - (BOOL)galleryView:(GalleryView *)view isImageNewAtIndex:(NSUInteger)index {
-	NSString *latestID = [[NSUserDefaults standardUserDefaults] objectForKey:@"MRIL.LatestID"];
 	Wallpaper *wallpaper = [_wallpapers objectAtIndex:index];
 	
-	return [latestID compare:wallpaper.identifier options:NSNumericSearch] == NSOrderedAscending;
+	return [_latestID compare:wallpaper.identifier options:NSNumericSearch] == NSOrderedAscending;
 }
 
 - (NSString *)galleryView:(GalleryView *)view titleForImageAtIndex:(NSUInteger)index {
@@ -109,6 +110,8 @@
 
 - (void)mainViewDidLoad {
 	[super mainViewDidLoad];
+	
+	_latestID = [[[NSUserDefaults standardUserDefaults] stringForKey:@"MRIL.LatestID"] copy];
 	
 	[self loadNextPageOfWallpapers];
 }

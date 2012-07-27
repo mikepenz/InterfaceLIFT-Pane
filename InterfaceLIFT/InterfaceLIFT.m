@@ -28,13 +28,13 @@
 		_wallpapers = [NSMutableArray new];
 		
 		_workQueue = [[NSOperationQueue alloc] init];
-		[_workQueue setMaxConcurrentOperationCount:1];
+		[_workQueue setMaxConcurrentOperationCount:5];
 		
 		_wallpaperQueue = [[NSOperationQueue alloc] init];
-		[_wallpaperQueue setMaxConcurrentOperationCount:1];
+		[_wallpaperQueue setMaxConcurrentOperationCount:5];
 		
 		_thumbQueue = [[NSOperationQueue alloc] init];
-		[_thumbQueue setMaxConcurrentOperationCount:1];
+		[_thumbQueue setMaxConcurrentOperationCount:2];
 	}
 	return self;
 }

@@ -17,8 +17,8 @@
 	if (_previewURL == nil)
 		return nil;
 	
-	int screenWidth = (int) CGRectGetWidth([NSScreen mainScreen].frame);
-	int screenHeight = (int) CGRectGetHeight([NSScreen mainScreen].frame);
+	int screenWidth = (int) 2880;
+	int screenHeight = (int) 1800;
 	
 	NSString *downloadURLString = [[_previewURL absoluteString] stringByReplacingOccurrencesOfString:@"previews"
 																						  withString:MAGIC_DOWNLOAD_KEY];

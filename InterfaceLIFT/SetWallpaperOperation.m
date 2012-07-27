@@ -40,7 +40,8 @@
 }
 
 - (NSString *)destinationPathWithFileName:(NSString *)fileName {
-	NSString *appSupportPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) lastObject];
+    
+	NSString *appSupportPath = [NSSearchPathForDirectoriesInDomains(NSPicturesDirectory, NSUserDomainMask, YES) lastObject];
 	appSupportPath = [appSupportPath stringByAppendingPathComponent:@"InterfaceLIFT"];
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];

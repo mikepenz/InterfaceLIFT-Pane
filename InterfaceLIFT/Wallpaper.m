@@ -16,9 +16,34 @@
 - (NSURL *)downloadURL {
 	if (_previewURL == nil)
 		return nil;
-	
+    
+    //RETINA
+	//int screenWidth = (int) 3840;
+	//int screenHeight = (int) 2400;
+    //RETINA
 	int screenWidth = (int) 2880;
 	int screenHeight = (int) 1800;
+    //2560x1600
+	//int screenWidth = (int) 2560;
+	//int screenHeight = (int) 1600;
+	//1920x1200
+    //int screenWidth = (int) 1920;
+	//int screenHeight = (int) 1200;
+    //1920x1080
+	//int screenWidth = (int) 1920;
+	//int screenHeight = (int) 1080;
+    //1280x800
+	//int screenWidth = (int) 1280;
+	//int screenHeight = (int) 800;
+    //1366x768
+	//int screenWidth = (int) 1366;
+	//int screenHeight = (int) 768;
+    //1280x800
+	//int screenWidth = (int) 1280;
+	//int screenHeight = (int) 720;
+    //1440x900
+	//int screenWidth = (int) 1440;
+	//int screenHeight = (int) 900;
 	
 	NSString *downloadURLString = [[_previewURL absoluteString] stringByReplacingOccurrencesOfString:@"previews"
 																						  withString:MAGIC_DOWNLOAD_KEY];

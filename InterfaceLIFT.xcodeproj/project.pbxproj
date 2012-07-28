@@ -230,7 +230,7 @@
 		C926430314B8B81E00EF9D57 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Matt Rajca";
 			};
 			buildConfigurationList = C926430614B8B81E00EF9D57 /* Build configuration list for PBXProject "InterfaceLIFT" */;
@@ -328,6 +328,7 @@
 		C926432B14B8B81F00EF9D57 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = InterfaceLIFT/Prefix.pch;
 				INFOPLIST_FILE = InterfaceLIFT/Resources/Info.plist;
@@ -340,6 +341,7 @@
 		C926432C14B8B81F00EF9D57 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = InterfaceLIFT/Prefix.pch;
 				INFOPLIST_FILE = InterfaceLIFT/Resources/Info.plist;

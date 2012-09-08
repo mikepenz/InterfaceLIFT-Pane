@@ -105,13 +105,13 @@
 							   }
 							   
 							   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-								   [self parseWallpaperDownload:data];
+								   [self parseWallpaperDownload:data identifier:wallpaper.identifier];
 							   }];
 							   
 						   }];
 }
 
-- (void)parseWallpaperDownload:(NSData *)data {
+- (void)parseWallpaperDownload:(NSData *)data identifier:(NSString *)identifier {
 	NSDictionary *wallpaperDownload = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 	NSURL *url = [NSURL URLWithString:[wallpaperDownload objectForKey:@"download_url"]];
 	
@@ -128,7 +128,8 @@
 								   return;
 							   }
 							   
-							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"wallpaper.jpg"];
+							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"wallpaper-%@.jpg", identifier]];
+							   
 							   [data writeToFile:path options:0 error:nil];
 							   
 							   [[NSWorkspace sharedWorkspace] setDesktopImageURL:[NSURL fileURLWithPath:path]

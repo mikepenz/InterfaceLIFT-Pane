@@ -8,6 +8,8 @@
 #import "InterfaceLIFT.h"
 #import "Wallpaper.h"
 
+#define USER_AGENT @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1"
+
 @implementation InterfaceLIFT {
 	NSString *_latestID;
 	NSOperationQueue *_workQueue;
@@ -130,7 +132,7 @@
 	NSRect screenRect = [myScreen frame];
 	NSString *resString = [NSString stringWithFormat: @"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
 	[params setObject: resString forKey: @"resolution"];
-	
+	[params setObject: [NSString stringWithFormat: @"%ld", _currentOffset] forKey:@"start"];
 	
 	// build the url using the values in the dictionary (probably slow)
 	NSMutableString *paramString = [NSMutableString stringWithString:@"?"];
@@ -178,6 +180,25 @@
 		[_wallpapers addObject:wallpaper];
 		[wallpaper release];
 		
+		[_thumbQueue addOperationWithBlock:^{
+			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:wallpaper.previewURL];
+			[request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+			NSData *imageData = [NSURLConnection sendSynchronousRequest:request
+													  returningResponse:nil error:nil];
+
+			NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];
+			
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				
+				wallpaper.thumbnail = image;
+				
+				NSUInteger index = [_wallpapers indexOfObject:wallpaper];
+				[self.galleryView reloadImageCellAtIndex:index];
+				
+			}];
+		}];
+
+		
 		[indices addIndex:lastIndex++];
 	}
 	
@@ -192,24 +213,5 @@
 
 	[self.galleryView insertImagesAtIndices:indices];
 }
-
-//- (void)wallpaperRequestOperationDidComplete:(WallpaperRequestOperation *)operation {
-//	Wallpaper *wallpaper = operation.wallpaper;
-//	
-//	[_thumbQueue addOperationWithBlock:^{
-//		
-//		NSImage *image = [[[NSImage alloc] initWithContentsOfURL:wallpaper.previewURL] autorelease];
-//		
-//		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//			
-//			wallpaper.thumbnail = image;
-//			
-//			NSUInteger index = [_wallpapers indexOfObject:wallpaper];
-//			[self.galleryView reloadImageCellAtIndex:index];
-//			
-//		}];
-//		
-//	}];
-//}
 
 @end

@@ -116,7 +116,7 @@
 
 - (void)loadNextPageOfWallpapers {
 	// Setup the url and key
-	NSString *hash = @"eXozcHV0bzN6eXJrd2ZjeHNyaWdlbGlrMHEzN25jOjM5ZDE3Y2NmNTk3Y2EzYTJlOTk2MmQ0NTFkZWU1MTJmZmJlMmNkZDI=";
+	NSString *hash = @"b3JvYXR6YjExcWhieTh4ZWxkcm00aGh3eTluaXBsOjIzMTcyMTExNTU4ZmViNDQ0NTFjZjRhYTMzN2ZiOTQwMDBkY2I3MWQ=";
 	NSString *header = @"X-Mashape-Authorization";
 	NSString *urlbase = @"https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpapers/";
 	
@@ -143,6 +143,7 @@
     NSURL *url = [NSURL URLWithString: totalUrl];
     NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL: url];
     [r setValue: hash forHTTPHeaderField: header];
+	[r setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
     
 	[NSURLConnection sendAsynchronousRequest: r queue:_workQueue
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {

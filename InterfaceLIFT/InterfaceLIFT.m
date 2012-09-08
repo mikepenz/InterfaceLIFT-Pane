@@ -154,14 +154,14 @@
 							   }
 							   
 							   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-								   [self parseTwitterFeedData:data];
+								   [self parseWallpapersFeed:data];
 							   }];
 							   
 						   }];
 	_currentOffset += 20;
 }
 
-- (void)parseTwitterFeedData:(NSData *)data {
+- (void)parseWallpapersFeed:(NSData *)data {
 	
 	//		Wallpaper *wallpaper = [[Wallpaper alloc] init];
 	//		wallpaper.identifier = [item objectForKey:@"id_str"];

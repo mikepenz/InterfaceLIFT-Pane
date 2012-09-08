@@ -9,6 +9,8 @@
 #import "Wallpaper.h"
 
 #define USER_AGENT @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1"
+#define HASH @"b3JvYXR6YjExcWhieTh4ZWxkcm00aGh3eTluaXBsOjIzMTcyMTExNTU4ZmViNDQ0NTFjZjRhYTMzN2ZiOTQwMDBkY2I3MWQ="
+#define HEADER @"X-Mashape-Authorization"
 
 @implementation InterfaceLIFT {
 	NSString *_latestID;
@@ -78,11 +80,60 @@
 - (void)galleryView:(GalleryView *)view didSelectCellAtIndex:(NSUInteger)index {
 	Wallpaper *wallpaper = [_wallpapers objectAtIndex:index];
 	
-	SetWallpaperOperation *op = [[SetWallpaperOperation alloc] initWithWallpaper:wallpaper];
-	op.delegate = self;
+	// Setup the url and key
+	NSString *urlbase = @"https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpaper_download/%@/%@/";
 	
-	[_workQueue addOperation:op];
-	[op release];
+	// Build resolution string and set resolution param
+	NSScreen *myScreen = [NSScreen mainScreen];
+	NSRect screenRect = [myScreen frame];
+	NSString *resString = [NSString stringWithFormat: @"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
+	NSString *totalUrl = [NSString stringWithFormat:urlbase, wallpaper.identifier, resString];
+	
+	// build the URL object and make the request
+    NSURL *url = [NSURL URLWithString: totalUrl];
+    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL: url];
+    [r setValue: HASH forHTTPHeaderField: HEADER];
+	[r setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
+	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+	
+	[NSURLConnection sendAsynchronousRequest: r queue:_workQueue
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+							   
+							   if (!data) {
+								   NSLog(@"Could not fetch wallpapers! Error: %@", error);
+								   return;
+							   }
+							   
+							   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+								   [self parseWallpaperDownload:data];
+							   }];
+							   
+						   }];
+}
+
+- (void)parseWallpaperDownload:(NSData *)data {
+	NSDictionary *wallpaperDownload = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+	NSURL *url = [NSURL URLWithString:[wallpaperDownload objectForKey:@"download_url"]];
+	
+	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL: url];
+    [r setValue: HASH forHTTPHeaderField: HEADER];
+	[r setValue: @"image/jpeg" forHTTPHeaderField: @"Content-Type"];
+	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+	
+	[NSURLConnection sendAsynchronousRequest: r queue: [NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+							   
+							   if (!data) {
+								   NSLog(@"Could not fetch wallpaper! Error: %@", error);
+								   return;
+							   }
+							   
+							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"wallpaper.jpg"];
+							   [data writeToFile:path options:0 error:nil];
+							   
+							   [[NSWorkspace sharedWorkspace] setDesktopImageURL:[NSURL fileURLWithPath:path]
+																	   forScreen:[NSScreen mainScreen] options:nil error:nil];
+						   }];
 }
 
 - (BOOL)galleryView:(GalleryView *)view isImageNewAtIndex:(NSUInteger)index {
@@ -119,8 +170,6 @@
 
 - (void)loadNextPageOfWallpapers {
 	// Setup the url and key
-	NSString *hash = @"b3JvYXR6YjExcWhieTh4ZWxkcm00aGh3eTluaXBsOjIzMTcyMTExNTU4ZmViNDQ0NTFjZjRhYTMzN2ZiOTQwMDBkY2I3MWQ=";
-	NSString *header = @"X-Mashape-Authorization";
 	NSString *urlbase = @"https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpapers/";
 	
 	// Parameters to use to make the API request
@@ -145,9 +194,9 @@
 	// build the URL object and make the request
     NSURL *url = [NSURL URLWithString: totalUrl];
     NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL: url];
-    [r setValue: hash forHTTPHeaderField: header];
+    [r setValue: HASH forHTTPHeaderField: HEADER];
 	[r setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
-    
+	
 	[NSURLConnection sendAsynchronousRequest: r queue:_workQueue
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 							   
@@ -164,7 +213,7 @@
 	_currentOffset += 20;
 }
 
-- (void)parseWallpapersFeed:(NSData *)data {	
+- (void)parseWallpapersFeed:(NSData *)data {
 	NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
 	NSUInteger lastIndex = [_wallpapers count];
 	
@@ -185,7 +234,7 @@
 			[request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
 			NSData *imageData = [NSURLConnection sendSynchronousRequest:request
 													  returningResponse:nil error:nil];
-
+			
 			NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];
 			
 			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
@@ -197,20 +246,20 @@
 				
 			}];
 		}];
-
+		
 		
 		[indices addIndex:lastIndex++];
 	}
 	
 	if ([_wallpapers count]) {
 		Wallpaper *newestWallpaper = [_wallpapers objectAtIndex:0];
-
+		
 		if (newestWallpaper) {
 			[[NSUserDefaults standardUserDefaults] setObject:newestWallpaper.identifier forKey:@"MRIL.LatestID"];
 			[[NSUserDefaults standardUserDefaults] synchronize];
 		}
 	}
-
+	
 	[self.galleryView insertImagesAtIndices:indices];
 }
 

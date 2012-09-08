@@ -6,6 +6,7 @@
 //
 
 #import "InterfaceLIFT.h"
+#import "Wallpaper.h"
 
 @implementation InterfaceLIFT {
 	NSString *_latestID;
@@ -149,7 +150,7 @@
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 							   
 							   if (!data) {
-								   NSLog(@"Could not fetch the Twitter feed. Error: %@", error);
+								   NSLog(@"Could not fetch wallpapers! Error: %@", error);
 								   return;
 							   }
 							   
@@ -161,53 +162,54 @@
 	_currentOffset += 20;
 }
 
-- (void)parseWallpapersFeed:(NSData *)data {
+- (void)parseWallpapersFeed:(NSData *)data {	
+	NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
+	NSUInteger lastIndex = [_wallpapers count];
 	
-	//		Wallpaper *wallpaper = [[Wallpaper alloc] init];
-	//		wallpaper.identifier = [item objectForKey:@"id_str"];
-	//
-	//		[_wallpapers addObject:wallpaper];
-	//		[wallpaper release];
-	//
-	//		WallpaperRequestOperation *request = [[WallpaperRequestOperation alloc] initWithURL:url];
-	//		request.wallpaper = wallpaper;
-	//		request.delegate = self;
-	//
-	//		[_wallpaperQueue addOperation:request];
-	//		[request release];
-	//
-	//		[indices addIndex:lastIndex++];
-	//
-	//
-	//	if ([_wallpapers count]) {
-	//		Wallpaper *newestWallpaper = [_wallpapers objectAtIndex:0];
-	//
-	//		if (newestWallpaper) {
-	//			[[NSUserDefaults standardUserDefaults] setObject:newestWallpaper.identifier forKey:@"MRIL.LatestID"];
-	//			[[NSUserDefaults standardUserDefaults] synchronize];
-	//		}
-	//	}
-	//
-	//	[self.galleryView insertImagesAtIndices:indices];
+	NSArray *wallpapers = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+	for(id item in wallpapers){
+		NSURL *previewUrl = [NSURL URLWithString:[item objectForKey: @"preview_url"]];
+		
+		Wallpaper *wallpaper = [[Wallpaper alloc] init];
+		wallpaper.identifier = [[item objectForKey:@"id"] stringValue];
+		wallpaper.previewURL = previewUrl;
+		wallpaper.title = [item objectForKey:@"title"];
+		
+		[_wallpapers addObject:wallpaper];
+		[wallpaper release];
+		
+		[indices addIndex:lastIndex++];
+	}
+	
+	if ([_wallpapers count]) {
+		Wallpaper *newestWallpaper = [_wallpapers objectAtIndex:0];
+
+		if (newestWallpaper) {
+			[[NSUserDefaults standardUserDefaults] setObject:newestWallpaper.identifier forKey:@"MRIL.LatestID"];
+			[[NSUserDefaults standardUserDefaults] synchronize];
+		}
+	}
+
+	[self.galleryView insertImagesAtIndices:indices];
 }
 
-- (void)wallpaperRequestOperationDidComplete:(WallpaperRequestOperation *)operation {
-	Wallpaper *wallpaper = operation.wallpaper;
-	
-	[_thumbQueue addOperationWithBlock:^{
-		
-		NSImage *image = [[[NSImage alloc] initWithContentsOfURL:wallpaper.previewURL] autorelease];
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			
-			wallpaper.thumbnail = image;
-			
-			NSUInteger index = [_wallpapers indexOfObject:wallpaper];
-			[self.galleryView reloadImageCellAtIndex:index];
-			
-		}];
-		
-	}];
-}
+//- (void)wallpaperRequestOperationDidComplete:(WallpaperRequestOperation *)operation {
+//	Wallpaper *wallpaper = operation.wallpaper;
+//	
+//	[_thumbQueue addOperationWithBlock:^{
+//		
+//		NSImage *image = [[[NSImage alloc] initWithContentsOfURL:wallpaper.previewURL] autorelease];
+//		
+//		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//			
+//			wallpaper.thumbnail = image;
+//			
+//			NSUInteger index = [_wallpapers indexOfObject:wallpaper];
+//			[self.galleryView reloadImageCellAtIndex:index];
+//			
+//		}];
+//		
+//	}];
+//}
 
 @end

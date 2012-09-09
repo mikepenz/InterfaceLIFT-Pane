@@ -81,27 +81,29 @@
 - (void)galleryView:(GalleryView *)view didSelectCellAtIndex:(NSUInteger)index {
 	Wallpaper *wallpaper = [_wallpapers objectAtIndex:index];
 	
+	[self loadWallpaper:wallpaper];
+}
+
+- (void)loadWallpaper:(Wallpaper *)wallpaper {
 	// Setup the url and key
 	NSString *urlbase = @"https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpaper_download/%@/%@/";
 	
 	// Build resolution string and set resolution param
-	NSScreen *myScreen = [NSScreen mainScreen];
-	NSRect screenRect = [myScreen frame];
-	NSString *resString = [NSString stringWithFormat: @"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
+	NSRect screenRect = [[NSScreen mainScreen] frame];
+	NSString *resString = [NSString stringWithFormat:@"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
 	NSString *totalUrl = [NSString stringWithFormat:urlbase, wallpaper.identifier, resString];
 	
 	// build the URL object and make the request
-    NSURL *url = [NSURL URLWithString: totalUrl];
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL: url];
-    [r setValue: HASH forHTTPHeaderField: HEADER];
-	[r setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
+    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:totalUrl]];
+    [r setValue:HASH forHTTPHeaderField:HEADER];
+	[r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
 	
-	[NSURLConnection sendAsynchronousRequest: r queue:_workQueue
+	[NSURLConnection sendAsynchronousRequest:r queue:_wallpaperQueue
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 							   
 							   if (!data) {
-								   NSLog(@"Could not fetch wallpapers! Error: %@", error);
+								   NSLog(@"Could not fetch wallpaper! Error: %@", error);
 								   return;
 							   }
 							   

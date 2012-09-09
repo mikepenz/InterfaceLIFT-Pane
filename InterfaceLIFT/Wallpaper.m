@@ -11,7 +11,7 @@
 
 #define MAGIC_DOWNLOAD_KEY @"7yz4ma1"
 
-@synthesize title, identifier, previewURL = _previewURL, downloadURL, thumbnail;
+@synthesize title, identifier, previewURL = _previewURL, thumbnail;
 
 - (NSURL *)downloadURL {
 	if (_previewURL == nil)

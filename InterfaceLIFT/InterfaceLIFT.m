@@ -220,8 +220,9 @@
 	NSUInteger lastIndex = [_wallpapers count];
 	
 	NSArray *wallpapers = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-	for(id item in wallpapers){
-		NSURL *previewUrl = [NSURL URLWithString:[item objectForKey: @"preview_url"]];
+	
+	for (NSDictionary *item in wallpapers){
+		NSURL *previewUrl = [NSURL URLWithString:[item objectForKey:@"preview_url"]];
 		
 		Wallpaper *wallpaper = [[Wallpaper alloc] init];
 		wallpaper.identifier = [[item objectForKey:@"id"] stringValue];
@@ -234,8 +235,10 @@
 		[_thumbQueue addOperationWithBlock:^{
 			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:wallpaper.previewURL];
 			[request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+			
 			NSData *imageData = [NSURLConnection sendSynchronousRequest:request
-													  returningResponse:nil error:nil];
+													  returningResponse:nil
+																  error:nil];
 			
 			NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];
 			
@@ -248,7 +251,6 @@
 				
 			}];
 		}];
-		
 		
 		[indices addIndex:lastIndex++];
 	}

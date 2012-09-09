@@ -6,6 +6,7 @@
 //
 
 #import "InterfaceLIFT.h"
+
 #import "Wallpaper.h"
 
 #define USER_AGENT @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1"
@@ -175,30 +176,29 @@
 	
 	// Parameters to use to make the API request
 	NSMutableDictionary *params = [NSMutableDictionary dictionary];
-	[params setObject: @"20" forKey: @"limit"];
+	[params setObject:@"21" forKey:@"limit"];
+	[params setObject:[NSString stringWithFormat:@"%ld", _currentOffset] forKey:@"start"];
 	
 	// Build resolution string and set resolution param
-	NSScreen *myScreen = [NSScreen mainScreen];
-	NSRect screenRect = [myScreen frame];
-	NSString *resString = [NSString stringWithFormat: @"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
-	[params setObject: resString forKey: @"resolution"];
-	[params setObject: [NSString stringWithFormat: @"%ld", _currentOffset] forKey:@"start"];
+	NSRect screenRect = [[NSScreen mainScreen] frame];
+	NSString *resString = [NSString stringWithFormat:@"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
+	[params setObject:resString forKey:@"resolution"];
 	
 	// build the url using the values in the dictionary (probably slow)
 	NSMutableString *paramString = [NSMutableString stringWithString:@"?"];
-	for(id key in params){
-		[paramString appendString: [NSMutableString stringWithFormat: @"%@=%@%@", key, [params objectForKey: key], @"&"]];
+	
+	for (NSString *key in params) {
+		[paramString appendString:[NSMutableString stringWithFormat:@"%@=%@%@", key, [params objectForKey:key], @"&"]];
 	}
 	
-	NSString *totalUrl = [NSString stringWithFormat: @"%@%@", urlbase, paramString];
-	
 	// build the URL object and make the request
-    NSURL *url = [NSURL URLWithString: totalUrl];
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL: url];
-    [r setValue: HASH forHTTPHeaderField: HEADER];
-	[r setValue: @"application/json" forHTTPHeaderField: @"Content-Type"];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlbase, paramString]];
 	
-	[NSURLConnection sendAsynchronousRequest: r queue:_workQueue
+    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
+    [r setValue:HASH forHTTPHeaderField:HEADER];
+	[r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	
+	[NSURLConnection sendAsynchronousRequest:r queue:_workQueue
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 							   
 							   if (!data) {
@@ -211,7 +211,8 @@
 							   }];
 							   
 						   }];
-	_currentOffset += 20;
+	
+	_currentOffset += 21;
 }
 
 - (void)parseWallpapersFeed:(NSData *)data {

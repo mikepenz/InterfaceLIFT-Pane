@@ -95,8 +95,8 @@
 	NSString *totalUrl = [NSString stringWithFormat:urlbase, wallpaper.identifier, resString];
 	
 	// build the URL object and make the request
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:totalUrl]];
-    [r setValue:HASH forHTTPHeaderField:HEADER];
+	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:totalUrl]];
+	[r setValue:HASH forHTTPHeaderField:HEADER];
 	[r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
 	
@@ -120,7 +120,7 @@
 	NSURL *url = [NSURL URLWithString:[wallpaperDownload objectForKey:@"download_url"]];
 	
 	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
-    [r setValue:HASH forHTTPHeaderField:HEADER];
+	[r setValue:HASH forHTTPHeaderField:HEADER];
 	[r setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
 	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
 	
@@ -189,10 +189,10 @@
 	}
 	
 	// build the URL object and make the request
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlbase, paramString]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlbase, paramString]];
 	
-    NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
-    [r setValue:HASH forHTTPHeaderField:HEADER];
+	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
+	[r setValue:HASH forHTTPHeaderField:HEADER];
 	[r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 	
 	[NSURLConnection sendAsynchronousRequest:r queue:_workQueue

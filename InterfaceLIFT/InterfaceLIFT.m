@@ -79,8 +79,9 @@
 }
 
 - (void)galleryView:(GalleryView *)view didSelectCellAtIndex:(NSUInteger)index {
-	Wallpaper *wallpaper = [_wallpapers objectAtIndex:index];
+	[[_galleryView imageCellAtIndex:index] showOverlay];
 	
+	Wallpaper *wallpaper = [_wallpapers objectAtIndex:index];
 	[self loadWallpaper:wallpaper];
 }
 
@@ -108,13 +109,13 @@
 							   }
 							   
 							   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-								   [self parseWallpaperDownload:data identifier:wallpaper.identifier];
+								   [self parseWallpaperDownload:data wallpaper:wallpaper];
 							   }];
 							   
 						   }];
 }
 
-- (void)parseWallpaperDownload:(NSData *)data identifier:(NSString *)identifier {
+- (void)parseWallpaperDownload:(NSData *)data wallpaper:(Wallpaper *)wallpaper {
 	NSDictionary *wallpaperDownload = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 	NSURL *url = [NSURL URLWithString:[wallpaperDownload objectForKey:@"download_url"]];
 	
@@ -131,7 +132,7 @@
 								   return;
 							   }
 							   
-							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"wallpaper-%@.jpg", identifier]];
+							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"wallpaper-%@.jpg", wallpaper.identifier]];
 							   
 							   [data writeToFile:path options:0 error:nil];
 							   
@@ -139,6 +140,10 @@
 																	   forScreen:[NSScreen mainScreen]
 																		 options:nil
 																		   error:nil];
+							   
+							   NSUInteger index = [_wallpapers indexOfObject:wallpaper];
+							   [[_galleryView imageCellAtIndex:index] hideOverlay];
+							   
 						   }];
 }
 
@@ -152,18 +157,6 @@
 	Wallpaper *wallpaper = [_wallpapers objectAtIndex:index];
 	
 	return wallpaper.title;
-}
-
-- (void)setWallpaperOperationDidStartDownload:(SetWallpaperOperation *)operation {
-	NSUInteger index = [_wallpapers indexOfObject:operation.wallpaper];
-	
-	[[_galleryView imageCellAtIndex:index] showOverlay];
-}
-
-- (void)setWallpaperOperationDidFinishDownload:(SetWallpaperOperation *)operation {
-	NSUInteger index = [_wallpapers indexOfObject:operation.wallpaper];
-	
-	[[_galleryView imageCellAtIndex:index] hideOverlay];
 }
 
 - (void)mainViewDidLoad {

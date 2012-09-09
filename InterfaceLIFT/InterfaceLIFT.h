@@ -6,9 +6,8 @@
 //
 
 #import "GalleryView.h"
-#import "SetWallpaperOperation.h"
 
-@interface InterfaceLIFT : NSPreferencePane < GalleryViewDelegate, SetWallpaperOperationDelegate >
+@interface InterfaceLIFT : NSPreferencePane < GalleryViewDelegate >
 
 @property (nonatomic, weak) IBOutlet GalleryView *galleryView;
 

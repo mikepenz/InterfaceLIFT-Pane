@@ -26,8 +26,6 @@
 		C9B1C77515A3CEFD00E9F0D0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C76F15A3CEFD00E9F0D0 /* Icon.png */; };
 		C9B1C77615A3CEFD00E9F0D0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C77015A3CEFD00E9F0D0 /* Icon@2x.png */; };
 		C9B1C77815A3CEFD00E9F0D0 /* InterfaceLIFT.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C77215A3CEFD00E9F0D0 /* InterfaceLIFT.xib */; };
-		C9DFD03814DC964C008655B7 /* SetWallpaperOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DFD03614DC964C008655B7 /* SetWallpaperOperation.h */; };
-		C9DFD03914DC964C008655B7 /* SetWallpaperOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD03714DC964C008655B7 /* SetWallpaperOperation.m */; };
 		C9DFD03C14DC9C95008655B7 /* ConcurrentOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */; };
 		C9DFD03D14DC9C95008655B7 /* ConcurrentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */; };
 /* End PBXBuildFile section */
@@ -72,8 +70,6 @@
 		C9B1C77015A3CEFD00E9F0D0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		C9B1C77115A3CEFD00E9F0D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9B1C77215A3CEFD00E9F0D0 /* InterfaceLIFT.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InterfaceLIFT.xib; sourceTree = "<group>"; };
-		C9DFD03614DC964C008655B7 /* SetWallpaperOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetWallpaperOperation.h; sourceTree = "<group>"; };
-		C9DFD03714DC964C008655B7 /* SetWallpaperOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetWallpaperOperation.m; sourceTree = "<group>"; };
 		C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConcurrentOperation.h; sourceTree = "<group>"; };
 		C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConcurrentOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,8 +143,6 @@
 				C926432114B8B81F00EF9D57 /* InterfaceLIFT.m */,
 				C91A1E3214DCAD0300A52E4D /* OverlayView.h */,
 				C91A1E3314DCAD0300A52E4D /* OverlayView.m */,
-				C9DFD03614DC964C008655B7 /* SetWallpaperOperation.h */,
-				C9DFD03714DC964C008655B7 /* SetWallpaperOperation.m */,
 				C926433414B8BEAD00EF9D57 /* Wallpaper.h */,
 				C926433514B8BEAD00EF9D57 /* Wallpaper.m */,
 			);
@@ -188,7 +182,6 @@
 			files = (
 				C9DFD03C14DC9C95008655B7 /* ConcurrentOperation.h in Headers */,
 				C91A1E3414DCAD0300A52E4D /* OverlayView.h in Headers */,
-				C9DFD03814DC964C008655B7 /* SetWallpaperOperation.h in Headers */,
 				C926433614B8BEAD00EF9D57 /* Wallpaper.h in Headers */,
 				C9097244159E091B002D42B8 /* GalleryView.h in Headers */,
 				C9097249159E0B38002D42B8 /* ImageCell.h in Headers */,
@@ -268,7 +261,6 @@
 				C909724A159E0B38002D42B8 /* ImageCell.m in Sources */,
 				C926432214B8B81F00EF9D57 /* InterfaceLIFT.m in Sources */,
 				C91A1E3514DCAD0300A52E4D /* OverlayView.m in Sources */,
-				C9DFD03914DC964C008655B7 /* SetWallpaperOperation.m in Sources */,
 				C926433714B8BEAD00EF9D57 /* Wallpaper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -118,12 +118,12 @@
 	NSDictionary *wallpaperDownload = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 	NSURL *url = [NSURL URLWithString:[wallpaperDownload objectForKey:@"download_url"]];
 	
-	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL: url];
-    [r setValue: HASH forHTTPHeaderField: HEADER];
-	[r setValue: @"image/jpeg" forHTTPHeaderField: @"Content-Type"];
+	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
+    [r setValue:HASH forHTTPHeaderField:HEADER];
+	[r setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
 	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
 	
-	[NSURLConnection sendAsynchronousRequest: r queue: [NSOperationQueue mainQueue]
+	[NSURLConnection sendAsynchronousRequest:r queue:[NSOperationQueue mainQueue]
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 							   
 							   if (!data) {
@@ -136,7 +136,9 @@
 							   [data writeToFile:path options:0 error:nil];
 							   
 							   [[NSWorkspace sharedWorkspace] setDesktopImageURL:[NSURL fileURLWithPath:path]
-																	   forScreen:[NSScreen mainScreen] options:nil error:nil];
+																	   forScreen:[NSScreen mainScreen]
+																		 options:nil
+																		   error:nil];
 						   }];
 }
 

@@ -11,7 +11,6 @@
 @property (copy) NSString *identifier;
 
 @property (strong) NSURL *previewURL;
-@property (readonly) NSURL *downloadURL;
 
 @property (strong) NSImage *thumbnail;
 

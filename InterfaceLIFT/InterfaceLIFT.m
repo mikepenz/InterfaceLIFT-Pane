@@ -7,18 +7,22 @@
 
 #import "InterfaceLIFT.h"
 
+#import "Wallpaper.h"
+
+#define USER_AGENT @"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1"
+#define HASH @"b3JvYXR6YjExcWhieTh4ZWxkcm00aGh3eTluaXBsOjIzMTcyMTExNTU4ZmViNDQ0NTFjZjRhYTMzN2ZiOTQwMDBkY2I3MWQ="
+#define HEADER @"X-Mashape-Authorization"
+
 @implementation InterfaceLIFT {
 	NSString *_latestID;
 	NSOperationQueue *_workQueue;
 	NSOperationQueue *_wallpaperQueue;
 	NSOperationQueue *_thumbQueue;
 	NSMutableArray *_wallpapers;
-	NSUInteger _currentPage;
+	NSUInteger _currentOffset;
 	
 	NSButton *_nextPageButton;
 }
-
-#define TWEET_BUTTON_IDENTIFIER @"<a href=\"http://twitter.com/tweetbutton\" rel=\"nofollow\">Tweet Button</a>"
 
 @synthesize galleryView = _galleryView;
 
@@ -75,13 +79,72 @@
 }
 
 - (void)galleryView:(GalleryView *)view didSelectCellAtIndex:(NSUInteger)index {
+	[[_galleryView imageCellAtIndex:index] showOverlay];
+	
 	Wallpaper *wallpaper = [_wallpapers objectAtIndex:index];
+	[self loadWallpaper:wallpaper];
+}
+
+- (void)loadWallpaper:(Wallpaper *)wallpaper {
+	// Setup the url and key
+	NSString *urlbase = @"https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpaper_download/%@/%@/";
 	
-	SetWallpaperOperation *op = [[SetWallpaperOperation alloc] initWithWallpaper:wallpaper];
-	op.delegate = self;
+	// Build resolution string and set resolution param
+	NSRect screenRect = [[NSScreen mainScreen] frame];
+	NSString *resString = [NSString stringWithFormat:@"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
+	NSString *totalUrl = [NSString stringWithFormat:urlbase, wallpaper.identifier, resString];
 	
-	[_workQueue addOperation:op];
-	[op release];
+	// build the URL object and make the request
+	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:totalUrl]];
+	[r setValue:HASH forHTTPHeaderField:HEADER];
+	[r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+	
+	[NSURLConnection sendAsynchronousRequest:r queue:_wallpaperQueue
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+							   
+							   if (!data) {
+								   NSLog(@"Could not fetch wallpaper! Error: %@", error);
+								   return;
+							   }
+							   
+							   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+								   [self parseWallpaperDownload:data wallpaper:wallpaper];
+							   }];
+							   
+						   }];
+}
+
+- (void)parseWallpaperDownload:(NSData *)data wallpaper:(Wallpaper *)wallpaper {
+	NSDictionary *wallpaperDownload = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+	NSURL *url = [NSURL URLWithString:[wallpaperDownload objectForKey:@"download_url"]];
+	
+	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
+	[r setValue:HASH forHTTPHeaderField:HEADER];
+	[r setValue:@"image/jpeg" forHTTPHeaderField:@"Content-Type"];
+	[r setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+	
+	[NSURLConnection sendAsynchronousRequest:r queue:[NSOperationQueue mainQueue]
+						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+							   
+							   if (!data) {
+								   NSLog(@"Could not fetch wallpaper! Error: %@", error);
+								   return;
+							   }
+							   
+							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"wallpaper-%@.jpg", wallpaper.identifier]];
+							   
+							   [data writeToFile:path options:0 error:nil];
+							   
+							   [[NSWorkspace sharedWorkspace] setDesktopImageURL:[NSURL fileURLWithPath:path]
+																	   forScreen:[NSScreen mainScreen]
+																		 options:nil
+																		   error:nil];
+							   
+							   NSUInteger index = [_wallpapers indexOfObject:wallpaper];
+							   [[_galleryView imageCellAtIndex:index] hideOverlay];
+							   
+						   }];
 }
 
 - (BOOL)galleryView:(GalleryView *)view isImageNewAtIndex:(NSUInteger)index {
@@ -96,18 +159,6 @@
 	return wallpaper.title;
 }
 
-- (void)setWallpaperOperationDidStartDownload:(SetWallpaperOperation *)operation {
-	NSUInteger index = [_wallpapers indexOfObject:operation.wallpaper];
-	
-	[[_galleryView imageCellAtIndex:index] showOverlay];
-}
-
-- (void)setWallpaperOperationDidFinishDownload:(SetWallpaperOperation *)operation {
-	NSUInteger index = [_wallpapers indexOfObject:operation.wallpaper];
-	
-	[[_galleryView imageCellAtIndex:index] hideOverlay];
-}
-
 - (void)mainViewDidLoad {
 	[super mainViewDidLoad];
 	
@@ -117,64 +168,86 @@
 }
 
 - (void)loadNextPageOfWallpapers {
-	_currentPage++;
+	// Setup the url and key
+	NSString *urlbase = @"https://interfacelift-interfacelift-wallpapers.p.mashape.com/v1/wallpapers/";
 	
-	NSString *urlString = [NSString stringWithFormat:@"http://api.twitter.com/1/statuses/user_timeline.json?include_entities=true&screen_name=interfacelift&count=21&page=%ld", _currentPage];
-	NSURL *feedURL = [NSURL URLWithString:urlString];
+	// Parameters to use to make the API request
+	NSMutableDictionary *params = [NSMutableDictionary dictionary];
+	[params setObject:@"21" forKey:@"limit"];
+	[params setObject:[NSString stringWithFormat:@"%ld", _currentOffset] forKey:@"start"];
 	
-	[NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:feedURL]
-									   queue:_workQueue
+	// Build resolution string and set resolution param
+	NSRect screenRect = [[NSScreen mainScreen] frame];
+	NSString *resString = [NSString stringWithFormat:@"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
+	[params setObject:resString forKey:@"resolution"];
+	
+	// build the url using the values in the dictionary (probably slow)
+	NSMutableString *paramString = [NSMutableString stringWithString:@"?"];
+	
+	for (NSString *key in params) {
+		[paramString appendString:[NSMutableString stringWithFormat:@"%@=%@%@", key, [params objectForKey:key], @"&"]];
+	}
+	
+	// build the URL object and make the request
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", urlbase, paramString]];
+	
+	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
+	[r setValue:HASH forHTTPHeaderField:HEADER];
+	[r setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	
+	[NSURLConnection sendAsynchronousRequest:r queue:_workQueue
 						   completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 							   
 							   if (!data) {
-								   NSLog(@"Could not fetch the Twitter feed. Error: %@", error);
+								   NSLog(@"Could not fetch wallpapers! Error: %@", error);
 								   return;
 							   }
 							   
 							   [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-								   [self parseTwitterFeedData:data];
+								   [self parseWallpapersFeed:data];
 							   }];
 							   
 						   }];
+	
+	_currentOffset += 21;
 }
 
-- (void)parseTwitterFeedData:(NSData *)data {
-	NSError *error = nil;
-	NSArray *tree = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-	
-	if (!tree || ![tree isKindOfClass:[NSArray class]]) {
-		NSLog(@"Could not parse the Twitter feed. Error: %@", error);
-		return;
-	}
-	
+- (void)parseWallpapersFeed:(NSData *)data {
 	NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
-	
 	NSUInteger lastIndex = [_wallpapers count];
 	
-	for (NSDictionary *item in tree) {
-		if (![[item objectForKey:@"source"] isEqualToString:TWEET_BUTTON_IDENTIFIER])
-			continue;
-		
-		NSDictionary *entities = [item objectForKey:@"entities"];
-		NSString *urlString = [[[entities objectForKey:@"urls"] lastObject] objectForKey:@"expanded_url"];
-		
-		if (!urlString)
-			continue;
-		
-		NSURL *url = [NSURL URLWithString:urlString];
+	NSArray *wallpapers = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+	
+	for (NSDictionary *item in wallpapers){
+		NSURL *previewUrl = [NSURL URLWithString:[item objectForKey:@"preview_url"]];
 		
 		Wallpaper *wallpaper = [[Wallpaper alloc] init];
-		wallpaper.identifier = [item objectForKey:@"id_str"];
+		wallpaper.identifier = [[item objectForKey:@"id"] stringValue];
+		wallpaper.previewURL = previewUrl;
+		wallpaper.title = [item objectForKey:@"title"];
 		
 		[_wallpapers addObject:wallpaper];
 		[wallpaper release];
 		
-		WallpaperRequestOperation *request = [[WallpaperRequestOperation alloc] initWithURL:url];
-		request.wallpaper = wallpaper;
-		request.delegate = self;
-		
-		[_wallpaperQueue addOperation:request];
-		[request release];
+		[_thumbQueue addOperationWithBlock:^{
+			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:wallpaper.previewURL];
+			[request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+			
+			NSData *imageData = [NSURLConnection sendSynchronousRequest:request
+													  returningResponse:nil
+																  error:nil];
+			
+			NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];
+			
+			[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+				
+				wallpaper.thumbnail = image;
+				
+				NSUInteger index = [_wallpapers indexOfObject:wallpaper];
+				[self.galleryView reloadImageCellAtIndex:index];
+				
+			}];
+		}];
 		
 		[indices addIndex:lastIndex++];
 	}
@@ -189,25 +262,6 @@
 	}
 	
 	[self.galleryView insertImagesAtIndices:indices];
-}
-
-- (void)wallpaperRequestOperationDidComplete:(WallpaperRequestOperation *)operation {
-	Wallpaper *wallpaper = operation.wallpaper;
-	
-	[_thumbQueue addOperationWithBlock:^{
-		
-		NSImage *image = [[[NSImage alloc] initWithContentsOfURL:wallpaper.previewURL] autorelease];
-		
-		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
-			
-			wallpaper.thumbnail = image;
-			
-			NSUInteger index = [_wallpapers indexOfObject:wallpaper];
-			[self.galleryView reloadImageCellAtIndex:index];
-			
-		}];
-		
-	}];
 }
 
 @end

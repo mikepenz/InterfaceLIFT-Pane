@@ -91,7 +91,8 @@
 	
 	// Build resolution string and set resolution param
 	NSRect screenRect = [[NSScreen mainScreen] frame];
-	NSString *resString = [NSString stringWithFormat:@"%dx%d", (int) screenRect.size.width, (int) screenRect.size.height];
+    CGFloat scaleFactor = [[NSScreen mainScreen] backingScaleFactor];
+	NSString *resString = [NSString stringWithFormat:@"%dx%d", (int) (screenRect.size.width * scaleFactor), (int) (screenRect.size.height * scaleFactor)];
 	NSString *totalUrl = [NSString stringWithFormat:urlbase, wallpaper.identifier, resString];
 	
 	// build the URL object and make the request
@@ -130,9 +131,11 @@
 							   if (!data) {
 								   NSLog(@"Could not fetch wallpaper! Error: %@", error);
 								   return;
-							   }
-							   
-							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"wallpaper-%@.jpg", wallpaper.identifier]];
+							   }                    
+
+                               NSString *appSupportPath = [NSSearchPathForDirectoriesInDomains(NSPicturesDirectory, NSUserDomainMask, YES) lastObject];
+                               appSupportPath = [appSupportPath stringByAppendingPathComponent:@"InterfaceLIFT"];
+                               NSString *path = [appSupportPath stringByAppendingPathComponent:[NSString stringWithFormat:@"wallpaper-%@.jpg", wallpaper.identifier]];
 							   
 							   [data writeToFile:path options:0 error:nil];
 							   

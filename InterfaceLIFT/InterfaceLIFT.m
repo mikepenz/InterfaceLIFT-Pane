@@ -141,12 +141,21 @@
 							   
 							   NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"wallpaper-%@.jpg", wallpaper.identifier]];
 							   
-							   [data writeToFile:path options:0 error:nil];
+							   NSError *dataError = nil;
 							   
-							   [[NSWorkspace sharedWorkspace] setDesktopImageURL:[NSURL fileURLWithPath:path]
-																	   forScreen:[NSScreen mainScreen]
-																		 options:nil
-																		   error:nil];
+							   if (![data writeToFile:path options:0 error:&dataError]) {
+								   NSLog(@"Could not write wallpaper to disk. Error: %@", dataError);
+							   }
+							   else {
+								   [[NSWorkspace sharedWorkspace] setDesktopImageURL:[NSURL fileURLWithPath:path]
+																		   forScreen:[NSScreen mainScreen]
+																			 options:nil
+																			   error:&dataError];
+								   
+								   if (dataError) {
+									   NSLog(@"Could not set wallpaper. Error: %@", dataError);
+								   }
+							   }
 							   
 							   NSUInteger index = [_wallpapers indexOfObject:wallpaper];
 							   [[_galleryView imageCellAtIndex:index] hideOverlay];
@@ -223,7 +232,13 @@
 	NSMutableIndexSet *indices = [NSMutableIndexSet indexSet];
 	NSUInteger lastIndex = [_wallpapers count];
 	
-	NSArray *wallpapers = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+	NSError *error = nil;
+	NSArray *wallpapers = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+	
+	if (!wallpapers) {
+		NSLog(@"Could not parse wallpapers feed. Error: %@", error);
+		return;
+	}
 	
 	for (NSDictionary *item in wallpapers){
 		NSURL *previewUrl = [NSURL URLWithString:[item objectForKey:@"preview_url"]];
@@ -240,9 +255,16 @@
 			NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:wallpaper.previewURL];
 			[request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
 			
+			NSError *error = nil;
+			
 			NSData *imageData = [NSURLConnection sendSynchronousRequest:request
 													  returningResponse:nil
-																  error:nil];
+																  error:&error];
+			
+			if (!imageData) {
+				NSLog(@"Could not load preview image. Error: %@", error);
+				return;
+			}
 			
 			NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];
 			

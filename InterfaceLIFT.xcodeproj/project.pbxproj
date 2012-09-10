@@ -26,8 +26,6 @@
 		C9B1C77515A3CEFD00E9F0D0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C76F15A3CEFD00E9F0D0 /* Icon.png */; };
 		C9B1C77615A3CEFD00E9F0D0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C77015A3CEFD00E9F0D0 /* Icon@2x.png */; };
 		C9B1C77815A3CEFD00E9F0D0 /* InterfaceLIFT.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9B1C77215A3CEFD00E9F0D0 /* InterfaceLIFT.xib */; };
-		C9DFD03C14DC9C95008655B7 /* ConcurrentOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */; };
-		C9DFD03D14DC9C95008655B7 /* ConcurrentOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -70,8 +68,6 @@
 		C9B1C77015A3CEFD00E9F0D0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		C9B1C77115A3CEFD00E9F0D0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9B1C77215A3CEFD00E9F0D0 /* InterfaceLIFT.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InterfaceLIFT.xib; sourceTree = "<group>"; };
-		C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConcurrentOperation.h; sourceTree = "<group>"; };
-		C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConcurrentOperation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,8 +129,6 @@
 		C926431914B8B81F00EF9D57 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C9DFD03A14DC9C95008655B7 /* ConcurrentOperation.h */,
-				C9DFD03B14DC9C95008655B7 /* ConcurrentOperation.m */,
 				C9097242159E091B002D42B8 /* GalleryView.h */,
 				C9097243159E091B002D42B8 /* GalleryView.m */,
 				C9097247159E0B38002D42B8 /* ImageCell.h */,
@@ -180,7 +174,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9DFD03C14DC9C95008655B7 /* ConcurrentOperation.h in Headers */,
 				C91A1E3414DCAD0300A52E4D /* OverlayView.h in Headers */,
 				C926433614B8BEAD00EF9D57 /* Wallpaper.h in Headers */,
 				C9097244159E091B002D42B8 /* GalleryView.h in Headers */,
@@ -256,7 +249,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9DFD03D14DC9C95008655B7 /* ConcurrentOperation.m in Sources */,
 				C9097245159E091B002D42B8 /* GalleryView.m in Sources */,
 				C909724A159E0B38002D42B8 /* ImageCell.m in Sources */,
 				C926432214B8B81F00EF9D57 /* InterfaceLIFT.m in Sources */,

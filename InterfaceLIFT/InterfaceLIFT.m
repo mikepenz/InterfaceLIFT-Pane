@@ -116,7 +116,14 @@
 }
 
 - (void)parseWallpaperDownload:(NSData *)data wallpaper:(Wallpaper *)wallpaper {
-	NSDictionary *wallpaperDownload = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+	NSError *error = nil;
+	NSDictionary *wallpaperDownload = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+	
+	if (!wallpaperDownload) {
+		NSLog(@"Could not parse wallpaper download. Error: %@", error);
+		return;
+	}
+	
 	NSURL *url = [NSURL URLWithString:[wallpaperDownload objectForKey:@"download_url"]];
 	
 	NSMutableURLRequest *r = [NSMutableURLRequest requestWithURL:url];
